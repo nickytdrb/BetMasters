@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+        <title>Admin Tab</title>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+              integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" rel="stylesheet">
+        <script crossorigin="anonymous"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script crossorigin="anonymous"
+                integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,900,900i" rel="stylesheet">
+        <link href="/images/bet.jpg" rel="icon" type="image/png"/>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="stylesheet" th:href="@{/css/main.css}">
+    </head>
+<body style="background-image: url('images/management.jpg'); background-repeat: no-repeat;
+    background-attachment: fixed;">
+<div class="container">
+
+    <nav class="navbar navbar-dark navbar-expand-md" id="navTop"
+         style="background: linear-gradient(to left, rgba(40, 181, 252, 0.767), rgba(4, 18, 31, 0.97), rgba(3, 15, 26, 0.97), rgba(40, 181, 252, 0.97));">
+        <a class="navbar-brand" href="/" style="width:20%;">
+            <img alt="Bet masters" height="50" th:src="@{/images/bet.jpg}" width="50px"> Bet Masters
+        </a>
+    </nav>
+    <h1 style="color: white;">Administration Tab</h1>
+    <table border="1" cellpadding="10" class="table table-dark">
+        <tr>
+            <th>Id</th>
+            <th>Όνομα</th>
+            <th>Επίθετο</th>
+            <th>Email</th>
+            <th>Ρόλος</th>
+            <th>Ενεργός</th>
+            <th>Ενέργειες</th>
+        </tr>
+
+        <tr th:each="user: ${allUsers}">
+            <td th:text="${user.id}"/>
+            <td th:text="${user.firstName}"/>
+            <td th:text="${user.lastName}"/>
+            <td th:text="${user.email}"/>
+            <td th:text="${user.roles}"/>
+            <td th:text="${user.isActive}"/>
+            <td>
+                <a th:href="@{/updateUser/{id}(id=${user.id})}">
+                    <button class="btn btn-primary">Ενημέρωση</button>
+                </a>
+
+                <a th:href="@{/deleteUser/{id}(id=${user.id})}">
+                    <button class="btn btn-danger">Διαγραφή</button>
+                </a>
+
+                <a th:href="@{/enableUser/{id}(id=${user.id})}" th:if="${user.isActive == false}">
+                    <button class="btn btn-info">Ενεργοποίηση</button>
+                </a>
+
+                <a th:href="@{/disableUser/{id}(id=${user.id})}" th:if="${user.isActive}">
+                    <button class="btn btn-warning">Απενεργοποίηση</button>
+                </a>
+            </td>
+        </tr>
+
+    </table>
+    <div style="display: flex;">
+        <form action="insertAdmin" method="GET" style="padding-left:20px;">
+            <button class="btn btn-success">Προσθήκη Νέου Διαχειριστή</button>
+        </form>
+        <form action="insertUser" method="GET" style="padding-left:20px;">
+            <button class="btn btn-secondary">Προσθήκη Νέου Χρήστη</button>
+        </form>
+    </div>
+
+    <nav class="navbar navbar-dark navbar-expand-md" id="navTop"
+         style="background: linear-gradient(to left, rgba(40, 181, 252, 0.767), rgba(4, 18, 31, 0.97), rgba(3, 15, 26, 0.97), rgba(40, 181, 252, 0.97)); margin-top:20px;">
+        <a class="navbar-brand" href="https://dashboard.stripe.com/test/dashboard" style="width:30%;">
+            <img alt="Bet masters" height="50" th:src="@{/images/stripe.jpg}" width="100px"> Πατήστε εδώ για τη
+            διαχείριση των εσόδων
+        </a>
+    </nav>
+
+</div>
+</body>
+</html>
